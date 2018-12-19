@@ -1,0 +1,38 @@
+version: '3'
+services:
+
+  logger:
+    build: .
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
+
+  elasticsearch:
+    environment:
+      http.host: 0.0.0.0
+      transport.host: 127.0.0.1
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.5.3
+    ports:
+      - 9200:9200
+
+  logstash:
+    image: docker.elastic.co/logstash/logstash:6.5.3
+    depends_on:
+      - elasticsearch
+    ports:
+      - 5044:5044
+      - "12201:12201/udp"
+    volumes:
+      - ./logstash.yml:/usr/share/logstash/config/logstash.yml
+
+  kibana:
+    depends_on:
+      - elasticsearch
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_USERNAME: elastic
+      ELASTICSEARCH_PASSWORD: elastic
+    image: docker.elastic.co/kibana/kibana-oss:6.5.3
+    ports:
+      - 5601:5601

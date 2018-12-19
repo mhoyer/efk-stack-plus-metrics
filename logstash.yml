@@ -1,0 +1,12 @@
+config:
+  string: >-
+    input {
+      gelf {}
+    }
+
+    output {
+      elasticsearch {
+        hosts => ["http://elasticsearch:9200"]
+        index => "gelf-%{+YYYY.MM.dd}"
+      }
+    }
