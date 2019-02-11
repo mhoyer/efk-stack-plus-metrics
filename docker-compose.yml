@@ -1,38 +1,74 @@
 version: '3'
 services:
 
-  logger:
-    build: .
+  fake-logger:
+    build: ./src/fake-logger
+    container_name: fake-logger
+    ports:
+      - "8000:8000"
+    links:
+      - fluentd
     logging:
-      driver: gelf
+      driver: fluentd
       options:
-        gelf-address: udp://localhost:12201
+        fluentd-address: localhost:24224
+        tag: fake-logger.{{.ID}}
+
+  telegraf:
+    image: telegraf:1.9-alpine
+    container_name: telegraf
+    volumes:
+      - ./src/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf
+
+  influxdb:
+    image: influxdb:1.5-alpine
+    container_name: influxdb
+    environment:
+      - INFLUXDB_DB=Metrics
+      - INFLUXDB_USER=influx
+      - INFLUXDB_USER_PASSWORD=influx
+    ports:
+      - "8086:8086"
+
+  grafana:
+    image: grafana/grafana:5.4.3
+    container_name: grafana
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./.grafana:/var/lib/grafana
+
+  fluentd:
+    build: ./src/es-fluentd
+    container_name: fluentd
+    volumes:
+      - ./src/es-fluentd/fluent.conf:/fluentd/etc/fluent.conf
+    links:
+      - elasticsearch
+    ports:
+      - "24224:24224"
+      - "24224:24224/udp"
 
   elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.5.3
+    container_name: elasticsearch
+    ports:
+      - "9200:9200"
     environment:
       http.host: 0.0.0.0
       transport.host: 127.0.0.1
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.5.3
-    ports:
-      - 9200:9200
-
-  logstash:
-    image: docker.elastic.co/logstash/logstash:6.5.3
-    depends_on:
-      - elasticsearch
-    ports:
-      - 5044:5044
-      - "12201:12201/udp"
-    volumes:
-      - ./logstash.yml:/usr/share/logstash/config/logstash.yml
 
   kibana:
-    depends_on:
+    image: docker.elastic.co/kibana/kibana-oss:6.5.3
+    container_name: kibana
+    links:
       - elasticsearch
     environment:
       ELASTICSEARCH_URL: http://elasticsearch:9200
       ELASTICSEARCH_USERNAME: elastic
       ELASTICSEARCH_PASSWORD: elastic
-    image: docker.elastic.co/kibana/kibana-oss:6.5.3
     ports:
-      - 5601:5601
+      - "5601:5601"

@@ -5,7 +5,6 @@ Based on https://www.exoscale.com/syslog/docker-logging/ this setup is an attemp
 ## Run it
 
 ```bash
-docker-compose up
-# wait... open http://localhost:5601
+docker-compose up -d
+# wait... open http://localhost:3000 and http://localhost:5601
 ```
-
