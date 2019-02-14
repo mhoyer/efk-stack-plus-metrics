@@ -34,12 +34,24 @@ services:
     image: grafana/grafana:5.4.3
     container_name: grafana
     environment:
-      - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
     ports:
       - "3000:3000"
-    volumes:
-      - ./.grafana:/var/lib/grafana
+    links:
+      - influxdb
+
+  grafana-init:
+    build: ./src/grafana-init
+    container_name: grafana-init
+    environment:
+      - GRAFANA_URL=http://grafana:3000
+      - INFLUX_DB=Metrics
+      - INFLUX_USER=influx
+      - INFLUX_PASSWORD=influx
+    links:
+      - grafana
 
   fluentd:
     build: ./src/es-fluentd
