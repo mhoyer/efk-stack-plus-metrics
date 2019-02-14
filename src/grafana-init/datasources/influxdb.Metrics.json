@@ -1,11 +1,11 @@
 {
-    "name": "$INFLUX_DB",
+    "name": "InfluxDB Metrics",
     "type": "influxdb",
     "url": "http://influxdb:8086",
     "access": "proxy",
     "user": "$INFLUX_USER",
     "password": "$INFLUX_PASSWORD",
-    "database": "$INFLUX_DB",
+    "database": "Metrics",
     "basicAuth": false,
     "isDefault": true
 }

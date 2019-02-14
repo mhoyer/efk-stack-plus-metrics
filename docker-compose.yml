@@ -19,6 +19,7 @@ services:
     container_name: telegraf
     volumes:
       - ./src/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf
+      - //var/run/docker.sock:/var/run/docker.sock
 
   influxdb:
     image: influxdb:1.5-alpine
