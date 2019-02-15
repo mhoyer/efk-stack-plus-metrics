@@ -19,26 +19,11 @@
     "links": [],
     "panels": [
       {
-        "content": "# Overview\n\nSee also:\n- ElasticSearch: [http://localhost:5601](http://localhost:5601)",
-        "gridPos": {
-          "h": 4,
-          "w": 7,
-          "x": 0,
-          "y": 0
-        },
-        "id": 4,
-        "links": [],
-        "mode": "markdown",
-        "title": "",
-        "transparent": true,
-        "type": "text"
-      },
-      {
         "gridPos": {
           "h": 1,
           "w": 24,
           "x": 0,
-          "y": 4
+          "y": 0
         },
         "id": 14,
         "title": "Docker",
@@ -55,7 +40,7 @@
           "h": 7,
           "w": 21,
           "x": 0,
-          "y": 5
+          "y": 1
         },
         "id": 10,
         "legend": {
@@ -172,6 +157,21 @@
         }
       },
       {
+        "content": "# Overview\n\nSee also:\n- ElasticSearch: [http://localhost:5601](http://localhost:5601)",
+        "gridPos": {
+          "h": 4,
+          "w": 3,
+          "x": 21,
+          "y": 1
+        },
+        "id": 4,
+        "links": [],
+        "mode": "markdown",
+        "title": "",
+        "transparent": true,
+        "type": "text"
+      },
+      {
         "aliasColors": {},
         "bars": false,
         "dashLength": 10,
@@ -182,7 +182,7 @@
           "h": 7,
           "w": 21,
           "x": 0,
-          "y": 12
+          "y": 8
         },
         "id": 15,
         "legend": {
@@ -309,7 +309,7 @@
           "h": 7,
           "w": 21,
           "x": 0,
-          "y": 19
+          "y": 15
         },
         "id": 16,
         "legend": {
@@ -334,11 +334,11 @@
         "renderer": "flot",
         "seriesOverrides": [],
         "spaceLength": 10,
-        "stack": false,
+        "stack": true,
         "steppedLine": false,
         "targets": [
           {
-            "alias": "$tag_container_name",
+            "alias": "$col",
             "groupBy": [
               {
                 "params": [
@@ -348,21 +348,15 @@
               },
               {
                 "params": [
-                  "container_name"
-                ],
-                "type": "tag"
-              },
-              {
-                "params": [
                   "none"
                 ],
                 "type": "fill"
               }
             ],
-            "measurement": "docker.docker_container_blkio",
+            "measurement": "elasticsearch.elasticsearch_indices",
             "orderByTime": "ASC",
             "policy": "default",
-            "query": "SELECT mean(\"usage_percent\") FROM \"docker.docker_container_cpu\" WHERE $timeFilter GROUP BY time($__interval), \"container_name\" fill(none)",
+            "query": "SELECT sum(/bytes/) FROM \"elasticsearch.elasticsearch_indices\" WHERE $timeFilter GROUP BY time($__interval) fill(none)",
             "rawQuery": false,
             "refId": "A",
             "resultFormat": "time_series",
@@ -370,17 +364,37 @@
               [
                 {
                   "params": [
-                    "io_service_bytes_recursive_total"
+                    "translog_size_in_bytes"
                   ],
                   "type": "field"
                 },
                 {
                   "params": [],
-                  "type": "sum"
+                  "type": "max"
+                },
+                {
+                  "params": [
+                    "Translog"
+                  ],
+                  "type": "alias"
+                }
+              ],
+              [
+                {
+                  "params": [
+                    "store_size_in_bytes"
+                  ],
+                  "type": "field"
                 },
                 {
                   "params": [],
-                  "type": "non_negative_difference"
+                  "type": "max"
+                },
+                {
+                  "params": [
+                    "Store"
+                  ],
+                  "type": "alias"
                 }
               ]
             ],
@@ -391,7 +405,7 @@
         "timeFrom": null,
         "timeRegions": [],
         "timeShift": null,
-        "title": "Docker Containers Disk Usage",
+        "title": "Elastic Search Disk Usage",
         "tooltip": {
           "shared": true,
           "sort": 0,
@@ -435,7 +449,7 @@
           "h": 1,
           "w": 24,
           "x": 0,
-          "y": 26
+          "y": 22
         },
         "id": 12,
         "panels": [],
@@ -453,7 +467,7 @@
           "h": 7,
           "w": 21,
           "x": 0,
-          "y": 27
+          "y": 23
         },
         "id": 2,
         "legend": {
@@ -651,7 +665,7 @@
           "h": 2,
           "w": 3,
           "x": 21,
-          "y": 27
+          "y": 23
         },
         "id": 7,
         "interval": null,
@@ -767,7 +781,7 @@
           "h": 2,
           "w": 3,
           "x": 21,
-          "y": 29
+          "y": 25
         },
         "id": 6,
         "interval": null,
