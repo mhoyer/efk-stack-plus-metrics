@@ -41,7 +41,7 @@
           "y": 4
         },
         "id": 14,
-        "title": "Row title",
+        "title": "Docker",
         "type": "row"
       },
       {
@@ -172,16 +172,274 @@
         }
       },
       {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "InfluxDB Metrics",
+        "fill": 1,
+        "gridPos": {
+          "h": 7,
+          "w": 21,
+          "x": 0,
+          "y": 12
+        },
+        "id": 15,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": false,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "sideWidth": 250,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "alias": "$tag_container_name",
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "container_name"
+                ],
+                "type": "tag"
+              },
+              {
+                "params": [
+                  "none"
+                ],
+                "type": "fill"
+              }
+            ],
+            "measurement": "docker.docker_container_mem",
+            "orderByTime": "ASC",
+            "policy": "default",
+            "query": "SELECT mean(\"usage_percent\") FROM \"docker.docker_container_cpu\" WHERE $timeFilter GROUP BY time($__interval), \"container_name\" fill(none)",
+            "rawQuery": false,
+            "refId": "A",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "usage"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "sum"
+                }
+              ]
+            ],
+            "tags": []
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Docker Containers Memory Usage",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "decimals": null,
+            "format": "decbytes",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": "0",
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "InfluxDB Metrics",
+        "fill": 1,
+        "gridPos": {
+          "h": 7,
+          "w": 21,
+          "x": 0,
+          "y": 19
+        },
+        "id": 16,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": false,
+          "max": true,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "sideWidth": 250,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "alias": "$tag_container_name",
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "container_name"
+                ],
+                "type": "tag"
+              },
+              {
+                "params": [
+                  "none"
+                ],
+                "type": "fill"
+              }
+            ],
+            "measurement": "docker.docker_container_blkio",
+            "orderByTime": "ASC",
+            "policy": "default",
+            "query": "SELECT mean(\"usage_percent\") FROM \"docker.docker_container_cpu\" WHERE $timeFilter GROUP BY time($__interval), \"container_name\" fill(none)",
+            "rawQuery": false,
+            "refId": "A",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "io_service_bytes_recursive_total"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "sum"
+                },
+                {
+                  "params": [],
+                  "type": "non_negative_difference"
+                }
+              ]
+            ],
+            "tags": []
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Docker Containers Disk Usage",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "decimals": null,
+            "format": "decbytes",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": "0",
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
         "collapsed": false,
         "gridPos": {
           "h": 1,
           "w": 24,
           "x": 0,
-          "y": 12
+          "y": 26
         },
         "id": 12,
         "panels": [],
-        "title": "Row title",
+        "title": "Fake Logger",
         "type": "row"
       },
       {
@@ -195,7 +453,7 @@
           "h": 7,
           "w": 21,
           "x": 0,
-          "y": 13
+          "y": 27
         },
         "id": 2,
         "legend": {
@@ -393,7 +651,7 @@
           "h": 2,
           "w": 3,
           "x": 21,
-          "y": 13
+          "y": 27
         },
         "id": 7,
         "interval": null,
@@ -509,7 +767,7 @@
           "h": 2,
           "w": 3,
           "x": 21,
-          "y": 15
+          "y": 29
         },
         "id": 6,
         "interval": null,
