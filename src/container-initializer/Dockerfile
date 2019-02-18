@@ -6,8 +6,7 @@ RUN apk add --no-cache \
 
 WORKDIR /app
 
-COPY dashboards/ ./dashboards
-COPY datasources/ ./datasources
-COPY entrypoint.sh ./
+COPY grafana/ ./grafana
+COPY *.sh ./
 
 ENTRYPOINT ["/app/entrypoint.sh"]

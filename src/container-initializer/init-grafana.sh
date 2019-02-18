@@ -9,7 +9,8 @@ post() {
     curl -s -X POST -d "$1" \
         -H 'Content-Type: application/json;charset=UTF-8' \
         "$GRAFANA_URL$2" \
-        -o /dev/null -w " POST $GRAFANA_URL$2 -> %{http_code}\n"
+        -o /dev/null \
+        -w " POST $GRAFANA_URL$2 -> %{http_code}\n"
 }
 
 if [ ! -f "grafana.init" ]; then
@@ -18,12 +19,12 @@ if [ ! -f "grafana.init" ]; then
         sleep 2
     done
 
-    for datasource in ./datasources/*; do
+    for datasource in ./grafana/datasources/*; do
         echo -n "Creating datasource from $datasource:"
         post "$(envsubst < $datasource)" "/api/datasources"
     done
 
-    for dashboard in ./dashboards/*; do
+    for dashboard in ./grafana/dashboards/*; do
         echo -n "Creating dashboard from $dashboard:"
         post "$(cat $dashboard)" "/api/dashboards/db"
     done
