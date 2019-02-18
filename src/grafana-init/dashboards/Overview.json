@@ -126,7 +126,7 @@
         "timeFrom": null,
         "timeRegions": [],
         "timeShift": null,
-        "title": "Docker Containers CPU Load - $container",
+        "title": "Docker Containers - CPU Load - $container",
         "tooltip": {
           "shared": true,
           "sort": 0,
@@ -274,7 +274,7 @@
         "timeFrom": null,
         "timeRegions": [],
         "timeShift": null,
-        "title": "Docker Containers Memory Usage - $container",
+        "title": "Docker Containers - Memory Usage - $container",
         "tooltip": {
           "shared": true,
           "sort": 0,
@@ -320,7 +320,7 @@
         "datasource": "InfluxDB Metrics",
         "fill": 1,
         "gridPos": {
-          "h": 7,
+          "h": 5,
           "w": 21,
           "x": 0,
           "y": 15
@@ -419,7 +419,7 @@
         "timeFrom": null,
         "timeRegions": [],
         "timeShift": null,
-        "title": "Elastic Search Disk Usage",
+        "title": "Elastic Search - Disk Usage",
         "tooltip": {
           "shared": true,
           "sort": 0,
@@ -458,12 +458,186 @@
         }
       },
       {
+        "aliasColors": {},
+        "bars": true,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": "InfluxDB Metrics",
+        "fill": 1,
+        "gridPos": {
+          "h": 5,
+          "w": 21,
+          "x": 0,
+          "y": 20
+        },
+        "id": 19,
+        "legend": {
+          "alignAsTable": true,
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "sideWidth": 250,
+          "total": false,
+          "values": false
+        },
+        "lines": false,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [
+          {
+            "alias": "Buffer Queue Length",
+            "bars": false,
+            "lines": true,
+            "yaxis": 2
+          },
+          {
+            "alias": "Retry Count",
+            "bars": false,
+            "color": "#bf1b00",
+            "lines": true,
+            "yaxis": 2
+          }
+        ],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "alias": "$col",
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "none"
+                ],
+                "type": "fill"
+              }
+            ],
+            "measurement": "fluentd.fluentd",
+            "orderByTime": "ASC",
+            "policy": "default",
+            "refId": "A",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "buffer_total_queued_size"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "sum"
+                },
+                {
+                  "params": [
+                    "Buffer Queue Size"
+                  ],
+                  "type": "alias"
+                }
+              ],
+              [
+                {
+                  "params": [
+                    "buffer_queue_length"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "sum"
+                },
+                {
+                  "params": [
+                    "Buffer Queue Length"
+                  ],
+                  "type": "alias"
+                }
+              ],
+              [
+                {
+                  "params": [
+                    "retry_count"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "sum"
+                },
+                {
+                  "params": [
+                    "Retry Count"
+                  ],
+                  "type": "alias"
+                }
+              ]
+            ],
+            "tags": []
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "fluentd - Buffer Queue",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "label": "Buffer Queue Size",
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          },
+          {
+            "format": "locale",
+            "label": "Buffer Queue Length",
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
+      },
+      {
         "collapsed": false,
         "gridPos": {
           "h": 1,
           "w": 24,
           "x": 0,
-          "y": 22
+          "y": 25
         },
         "id": 12,
         "panels": [],
@@ -481,7 +655,7 @@
           "h": 7,
           "w": 21,
           "x": 0,
-          "y": 23
+          "y": 26
         },
         "id": 2,
         "legend": {
@@ -683,7 +857,7 @@
           "h": 2,
           "w": 3,
           "x": 21,
-          "y": 23
+          "y": 26
         },
         "id": 6,
         "interval": null,
@@ -765,7 +939,7 @@
           }
         ],
         "thresholds": "",
-        "title": "Error Messages",
+        "title": "Error Messages (Σ)",
         "transparent": false,
         "type": "singlestat",
         "valueFontSize": "50%",
@@ -801,7 +975,7 @@
           "h": 2,
           "w": 3,
           "x": 21,
-          "y": 25
+          "y": 28
         },
         "id": 7,
         "interval": null,
@@ -883,7 +1057,7 @@
           }
         ],
         "thresholds": "",
-        "title": "Info Messages",
+        "title": "Info Messages (Σ)",
         "transparent": false,
         "type": "singlestat",
         "valueFontSize": "50%",
@@ -917,7 +1091,7 @@
           "h": 2,
           "w": 3,
           "x": 21,
-          "y": 27
+          "y": 30
         },
         "id": 17,
         "interval": null,
@@ -999,7 +1173,7 @@
           }
         ],
         "thresholds": "",
-        "title": "Debug Messages",
+        "title": "Debug Messages (Σ)",
         "transparent": false,
         "type": "singlestat",
         "valueFontSize": "50%",

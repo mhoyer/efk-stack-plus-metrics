@@ -62,6 +62,7 @@ services:
     links:
       - elasticsearch
     ports:
+      - "24220:24220"
       - "24224:24224"
       - "24224:24224/udp"
 
