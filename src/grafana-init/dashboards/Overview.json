@@ -39,7 +39,7 @@
         "datasource": "InfluxDB Metrics",
         "fill": 1,
         "gridPos": {
-          "h": 7,
+          "h": 6,
           "w": 21,
           "x": 0,
           "y": 1
@@ -187,10 +187,10 @@
         "datasource": "InfluxDB Metrics",
         "fill": 1,
         "gridPos": {
-          "h": 7,
+          "h": 6,
           "w": 21,
           "x": 0,
-          "y": 8
+          "y": 7
         },
         "id": 15,
         "legend": {
@@ -323,7 +323,7 @@
           "h": 5,
           "w": 21,
           "x": 0,
-          "y": 15
+          "y": 13
         },
         "id": 16,
         "legend": {
@@ -468,7 +468,7 @@
           "h": 5,
           "w": 21,
           "x": 0,
-          "y": 20
+          "y": 18
         },
         "id": 19,
         "legend": {
@@ -618,11 +618,12 @@
             "show": true
           },
           {
+            "decimals": null,
             "format": "locale",
             "label": "Buffer Queue Length",
             "logBase": 1,
             "max": null,
-            "min": null,
+            "min": "0",
             "show": true
           }
         ],
@@ -637,7 +638,7 @@
           "h": 1,
           "w": 24,
           "x": 0,
-          "y": 25
+          "y": 23
         },
         "id": 12,
         "panels": [],
@@ -652,10 +653,10 @@
         "description": "",
         "fill": 1,
         "gridPos": {
-          "h": 7,
+          "h": 5,
           "w": 21,
           "x": 0,
-          "y": 26
+          "y": 24
         },
         "id": 2,
         "legend": {
@@ -857,7 +858,7 @@
           "h": 2,
           "w": 3,
           "x": 21,
-          "y": 26
+          "y": 24
         },
         "id": 6,
         "interval": null,
@@ -975,7 +976,7 @@
           "h": 2,
           "w": 3,
           "x": 21,
-          "y": 28
+          "y": 26
         },
         "id": 7,
         "interval": null,
@@ -1091,7 +1092,7 @@
           "h": 2,
           "w": 3,
           "x": 21,
-          "y": 30
+          "y": 28
         },
         "id": 17,
         "interval": null,
@@ -1185,9 +1186,127 @@
           }
         ],
         "valueName": "avg"
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "fill": 1,
+        "gridPos": {
+          "h": 5,
+          "w": 21,
+          "x": 0,
+          "y": 29
+        },
+        "id": 21,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": false,
+          "max": false,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "sideWidth": 250,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 1,
+        "links": [],
+        "nullPointMode": "null",
+        "percentage": false,
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "alias": "Logging Pressure",
+            "groupBy": [
+              {
+                "params": [
+                  "$__interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "none"
+                ],
+                "type": "fill"
+              }
+            ],
+            "measurement": "fake-logger.app_current_pressure_percent",
+            "orderByTime": "ASC",
+            "policy": "default",
+            "refId": "A",
+            "resultFormat": "time_series",
+            "select": [
+              [
+                {
+                  "params": [
+                    "gauge"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "mean"
+                }
+              ]
+            ],
+            "tags": []
+          }
+        ],
+        "thresholds": [],
+        "timeFrom": null,
+        "timeRegions": [],
+        "timeShift": null,
+        "title": "Logging Pressure",
+        "tooltip": {
+          "shared": true,
+          "sort": 0,
+          "value_type": "individual"
+        },
+        "type": "graph",
+        "xaxis": {
+          "buckets": null,
+          "mode": "time",
+          "name": null,
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "decimals": null,
+            "format": "percentunit",
+            "label": null,
+            "logBase": 1,
+            "max": "1",
+            "min": "0",
+            "show": true
+          },
+          {
+            "format": "short",
+            "label": null,
+            "logBase": 1,
+            "max": null,
+            "min": null,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false,
+          "alignLevel": null
+        }
       }
     ],
-    "refresh": "30s",
+    "refresh": "10s",
     "schemaVersion": 16,
     "style": "dark",
     "tags": [],

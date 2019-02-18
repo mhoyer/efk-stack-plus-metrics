@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using Prometheus;
 using Serilog;
@@ -59,6 +60,9 @@ namespace FakeLogger
 
         static void Main(string[] args)
         {
+            var running = new Stopwatch();
+            running.Start();
+
             log = new LoggerConfiguration()
                 .WriteTo.Console(new ElasticsearchJsonFormatter(
                     renderMessage: true,
@@ -69,16 +73,25 @@ namespace FakeLogger
             var metricServer = new MetricServer(port: 8000);
             metricServer.Start();
 
-            logMetrics = Metrics.CreateCounter("app_logged_msg_total", "Number of logged messages.",
-                new CounterConfiguration { LabelNames = new [] { "level" }}
-            );
+            var pressureMetrics = Metrics.CreateGauge("app_current_pressure_percent", "Current logging pressure.");
+            logMetrics = Metrics.CreateCounter("app_logged_msg_total", "Number of logged messages.", new [] { "level" });
 
-            var sleepCounter = 0;
+            var msgCounter = 0;
             while(true)
             {
                 GenerateLogEntry();
-                sleepCounter = ++sleepCounter % 1000;
-                if (sleepCounter == 1) Thread.Sleep(rnd.Next(10, 5000));
+                msgCounter = (msgCounter + 1) % 300;
+                if (msgCounter == 0)
+                {
+                    // Time based sinus wave of logging pressure.
+                    var pressure = Math.Cos(Math.PI*(running.ElapsedMilliseconds)/150000)
+                        + Math.Cos(Math.PI*(running.ElapsedMilliseconds)/533000);
+                    pressure = (2 + pressure) / 4;
+                    pressure = pressure * (0.9 + 0.1 * rnd.NextDouble());
+                    pressureMetrics.Set(pressure);
+                    var sleep = 1 + 1000 * (1.0 - pressure);
+                    Thread.Sleep((int)sleep);
+                };
             }
         }
     }
