@@ -47,12 +47,16 @@ services:
     build: ./src/container-initializer
     container_name: container-init
     environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
       - GRAFANA_URL=http://grafana:3000
+      - KIBANA_URL=http://kibana:5601
       - INFLUX_DB=Metrics
       - INFLUX_USER=influx
       - INFLUX_PASSWORD=influx
     links:
+      - elasticsearch
       - grafana
+      - kibana
 
   fluentd:
     build: ./src/es-fluentd
