@@ -165,7 +165,7 @@
         }
       },
       {
-        "content": "# Overview\n\nSee also:\n- ElasticSearch: [http://localhost:5601](http://localhost:5601)",
+        "content": "# Overview\n\nSee also:\n- [Kibana](http://localhost:5601)\n- [ElasticHQ](http://localhost:5000/)",
         "gridPos": {
           "h": 4,
           "w": 3,

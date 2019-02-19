@@ -9,6 +9,7 @@ This setup is an attempt to run the ELF stack scenario using the 12 factor appro
   - [Fluentd](https://www.fluentd.org/) as unified logging gateway
   - [Elasticsearch](https://www.elastic.co/products/elasticsearch) for storage and indexing of logging data
   - [Kibana](https://www.elastic.co/products/kibana) for analysing the logging data
+  - [ElasticHQ](http://www.elastichq.org/) for managing and monitoring Elasticsearch
 - Application Telemetrie
   - [Prometheus dotnet Client](https://github.com/prometheus-net/prometheus-net) to expose an HTTP endpoint for metrics
   - [Telegraf](https://www.influxdata.com/time-series-platform/telegraf/) to collect metrics of all containers involved
