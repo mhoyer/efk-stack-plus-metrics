@@ -59,10 +59,10 @@ services:
       - kibana
 
   fluentd:
-    build: ./src/es-fluentd
+    build: ./src/fluentd
     container_name: fluentd
     volumes:
-      - ./src/es-fluentd/fluent.conf:/fluentd/etc/fluent.conf
+      - ./src/fluentd/fluent.conf:/fluentd/etc/fluent.conf
     links:
       - elasticsearch
     ports:
