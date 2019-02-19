@@ -87,6 +87,16 @@ services:
     environment:
       HQ_DEFAULT_URL: http://elasticsearch:9200
 
+  curator:
+    build: ./src/curator
+    container_name: curator
+    links:
+      - elasticsearch
+    environment:
+      ES_HOST: elasticsearch
+      UNIT: hours
+      UNIT_COUNT: 2
+
   kibana:
     image: docker.elastic.co/kibana/kibana-oss:6.5.3
     container_name: kibana

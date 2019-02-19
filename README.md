@@ -10,6 +10,7 @@ This setup is an attempt to run the ELF stack scenario using the 12 factor appro
   - [Elasticsearch](https://www.elastic.co/products/elasticsearch) for storage and indexing of logging data
   - [Kibana](https://www.elastic.co/products/kibana) for analysing the logging data
   - [ElasticHQ](http://www.elastichq.org/) for managing and monitoring Elasticsearch
+  - [Curator](https://www.elastic.co/guide/en/elasticsearch/client/curator/current/index.html) for lifecycle management of Elasticsearch indices and snapshots
 - Application Telemetrie
   - [Prometheus dotnet Client](https://github.com/prometheus-net/prometheus-net) to expose an HTTP endpoint for metrics
   - [Telegraf](https://www.influxdata.com/time-series-platform/telegraf/) to collect metrics of all containers involved
