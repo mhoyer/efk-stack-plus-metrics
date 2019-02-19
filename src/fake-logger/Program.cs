@@ -84,8 +84,8 @@ namespace FakeLogger
                 if (msgCounter == 0)
                 {
                     // Time based sinus wave of logging pressure.
-                    var pressure = Math.Cos(Math.PI*(running.ElapsedMilliseconds)/150000)
-                        + Math.Cos(Math.PI*(running.ElapsedMilliseconds)/533000);
+                    var pressure = Math.Cos(Math.PI*(running.ElapsedMilliseconds)/100000)
+                        + Math.Cos(Math.PI*(running.ElapsedMilliseconds)/433000);
                     pressure = (2 + pressure) / 4;
                     pressure = pressure * (0.9 + 0.1 * rnd.NextDouble());
                     pressureMetrics.Set(pressure);
