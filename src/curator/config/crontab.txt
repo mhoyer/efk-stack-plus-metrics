@@ -1,2 +1,2 @@
-# every 15min
-*/15 * * * *       curator ~/.curator/actions.yml
+# every hour at minute 5
+5 * * * *       curator ~/.curator/actions.yml
