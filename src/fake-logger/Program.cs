@@ -4,7 +4,7 @@ using System.Threading;
 using Prometheus;
 using Serilog;
 using Serilog.Core;
-using Serilog.Sinks.Elasticsearch;
+using Serilog.Formatting.Elasticsearch;
 
 namespace FakeLogger
 {
