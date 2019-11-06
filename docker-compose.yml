@@ -11,7 +11,10 @@ services:
     logging:
       driver: fluentd
       options:
-        fluentd-address: localhost:24224
+        fluentd-address: host.docker.internal:24224
+        fluentd-async-connect: "true"
+        fluentd-buffer-limit: "100mb"
+        mode: non-blocking
         tag: fake-logger.{{.ID}}
 
   telegraf:
